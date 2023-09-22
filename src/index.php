@@ -6,6 +6,10 @@
 // Docs: https://github.com/Lovely-Experiences/FileView.php/docs/v1.md
 
 declare(strict_types=1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+clearstatcache();
 
 // ---- Configuration ---- //
 
@@ -25,6 +29,7 @@ $config = json_decode(file_get_contents($configFilePath));
 
 // Create other needed variables.
 $files = new stdClass;
+$files->files = array();
 
 // Modify variables.
 $contentsFilePath = rtrim($contentsFilePath, "/");
@@ -32,18 +37,35 @@ $contentsFilePath = rtrim($contentsFilePath, "/");
 // Change current directory to the root directory.
 chdir($config->rootDirectory);
 
+// Verify that root is a directory.
+if (!file_exists($config->rootDirectory) or !is_dir($config->rootDirectory)) {
+    throw new Exception("Root is not a directory.");
+}
+
 // Recursive function that loads the files.
 function loadFile(string $filePath, stdClass $object): void
 {
     global $config;
-    if (is_dir($filePath)) {
-        $object->name = dirname($filePath);
-        $object->type = "folder";
-        $object->path = $filePath;
-        $object->files = array();
 
+    $newObject = new stdClass;
+
+    if (is_dir($filePath)) {
+        $newObject->name = basename($filePath);
+        $newObject->type = "folder";
+        $newObject->path = $filePath;
+        $newObject->files = array();
+        foreach (scandir($filePath) as $file) {
+            if ($file === "." or $file === "..")
+                continue;
+            loadFile($filePath . $file, $newObject);
+        }
+        array_push($object->files, $newObject);
     } else {
-        $object->type = "file";
+        $newObject->name = basename($filePath);
+        $newObject->type = "file";
+        $newObject->path = $filePath;
+        $newObject->extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        array_push($object->files, $newObject);
     }
 }
 
