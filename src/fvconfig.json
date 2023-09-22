@@ -4,5 +4,6 @@
     "ignoredFileExtensions": ["php"],
     "rootDirectory": "./",
     "rootURL": "/",
-    "recursive": true
+    "recursive": true,
+    "pageTitle": "File View"
 }
