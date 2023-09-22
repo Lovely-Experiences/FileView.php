@@ -1,6 +1,6 @@
 # FileView.php
 
-An easy to setup PHP script that allows you to display file directories for download and preview.
+An easy to setup PHP script that allows you to display files and directories for download and preview.
 
 # Docs
 
