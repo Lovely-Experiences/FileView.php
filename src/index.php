@@ -29,11 +29,32 @@ $files = new stdClass;
 // Modify variables.
 $contentsFilePath = rtrim($contentsFilePath, "/");
 
-// Set globals.
-global $contentsFilePath;
-global $config;
-global $files;
+// Change current directory to the root directory.
+chdir($config->rootDirectory);
 
+// Recursive function that loads the files.
+function loadFile(string $filePath, stdClass $object): void
+{
+    global $config;
+    if (is_dir($filePath)) {
+        $object->name = dirname($filePath);
+        $object->type = "folder";
+        $object->path = $filePath;
+        $object->files = array();
+
+    } else {
+        $object->type = "file";
+    }
+}
+
+loadFile($config->rootDirectory, $files);
+
+// Check if the URL is requesting JSON and return it if so.
+if (isset($_GET["json"])) {
+    header("Content-Type: application/json");
+    echo json_encode($files);
+    exit();
+}
 
 ?>
 

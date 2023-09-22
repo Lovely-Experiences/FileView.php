@@ -1,8 +1,5 @@
 {
-    "cSpell.words": [
-        "fvconfig",
-        "fvcontents"
-    ],
+    "cSpell.words": ["fvconfig", "fvcontents"],
     "php.format.rules.alignEnumCases": true,
     "php.format.codeStyle": "PSR-12",
     "php.workspace.shortOpenTag": "auto"
