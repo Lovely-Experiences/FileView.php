@@ -1,0 +1,8 @@
+{
+    "ignoredFolders": ["fvcontents"],
+    "ignoredFiles": ["fvconfig.json"],
+    "ignoredFileExtensions": ["php"],
+    "rootDirectory": "./",
+    "rootURL": "/",
+    "recursive": true
+}
