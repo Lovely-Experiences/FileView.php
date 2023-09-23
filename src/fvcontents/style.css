@@ -46,17 +46,20 @@ a
 {
     color: var(--link-color);
     text-decoration: none;
+    transition: color .5s;
 }
 
 a:hover
 {
     color: var(--link-hover-color);
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #pageDetails
 {
     padding: 20px;
+    max-width: 1000px;
 }
 
 #fileExplorer
@@ -87,9 +90,10 @@ a:hover
 
 .fileExplorerTopRow
 {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
     font-size: 24px;
+    font-weight: bold;
 }
 
 .fileExplorerFinalRow
@@ -104,4 +108,16 @@ a:hover
     height: 27px;
     float: left;
     margin-right: 8px;
+}
+
+.fileName
+{
+    transition: color .5s;
+}
+
+.fileName:hover
+{
+    color: var(--link-hover-color);
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -34,6 +34,8 @@ $files->files = array();
 $contentsFilePath = rtrim($contentsFilePath, "/");
 $config->rootDirectory = rtrim($config->rootDirectory, "/");
 $config->rootURL = rtrim($config->rootURL, "/");
+$config->_loaded = new stdClass;
+$config->_loaded->contentsFilePath = $configFilePath;
 
 // Change current directory to the root directory.
 if ($config->phpDirectory !== null) {
@@ -72,6 +74,7 @@ function loadFile(string $filePath, stdClass $object, $webPath): void
         $newObject->path = $filePath;
         $newObject->webPath = $webPath;
         $newObject->extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $newObject->size = filesize($filePath);
         array_push($object->files, $newObject);
     }
 }
@@ -113,7 +116,7 @@ if ($config->apiEnabled === true) {
     </div>
     <div id="fileExplorer">
         <div class="fileExplorerTopRow">
-            <p class="currentDirectory">/</p>
+            <p class="currentDirectory">&nbsp;&nbsp;/</p>
         </div>
         <div class="fileExplorerRow">
             <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/folder.svg" alt="File Icon">
