@@ -33,6 +33,7 @@ $files->files = array();
 
 // Modify variables.
 $contentsFilePath = rtrim($contentsFilePath, "/");
+$config->rootDirectory = rtrim($config->rootDirectory, "/");
 
 // Change current directory to the root directory.
 chdir($config->rootDirectory);
@@ -57,7 +58,7 @@ function loadFile(string $filePath, stdClass $object): void
         foreach (scandir($filePath) as $file) {
             if ($file === "." or $file === "..")
                 continue;
-            loadFile($filePath . $file, $newObject);
+            loadFile($filePath . "/" . $file, $newObject);
         }
         array_push($object->files, $newObject);
     } else {

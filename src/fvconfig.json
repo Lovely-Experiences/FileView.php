@@ -2,7 +2,7 @@
     "ignoredFolders": ["fvcontents"],
     "ignoredFiles": ["fvconfig.json"],
     "ignoredFileExtensions": ["php"],
-    "rootDirectory": "./",
+    "rootDirectory": "../",
     "rootURL": "/",
     "recursive": true,
     "pageTitle": "File View"
