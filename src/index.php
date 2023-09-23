@@ -35,7 +35,7 @@ $contentsFilePath = rtrim($contentsFilePath, "/");
 $config->rootDirectory = rtrim($config->rootDirectory, "/");
 $config->rootURL = rtrim($config->rootURL, "/");
 $config->_loaded = new stdClass;
-$config->_loaded->contentsFilePath = $configFilePath;
+$config->_loaded->contentsFilePath = $contentsFilePath;
 
 // Change current directory to the root directory.
 if ($config->phpDirectory !== null) {
@@ -114,17 +114,17 @@ if ($config->apiEnabled === true) {
             <?php echo $config->pageDescription; ?>
         </p>
     </div>
-    <div id="fileExplorer">
+    <div id="fileExplorer" hidden=true>
         <div class="fileExplorerTopRow">
-            <p class="currentDirectory">&nbsp;&nbsp;/</p>
+            <p class="currentDirectory">&nbsp;&nbsp;/Loading...</p>
         </div>
         <div class="fileExplorerRow">
             <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/folder.svg" alt="File Icon">
-            <p class="fileName">Folder Name</p>
+            <p class="fileName">Loading...</p>
         </div>
         <div class="fileExplorerRow fileExplorerFinalRow">
             <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/unknown.svg" alt="File Icon">
-            <p class="fileName">File Name</p>
+            <p class="fileName">Loading...</p>
         </div>
     </div>
     <script>

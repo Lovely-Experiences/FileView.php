@@ -18,7 +18,7 @@
     --link-color: rgb(76, 141, 210);
     --link-hover-color: rgb(48, 108, 198);
     --row-border-color: rgba(255, 255, 255, .2);
-    --text-transparent-color: rgba(250, 250, 250, .6);
+    --text-transparent-color: rgba(250, 250, 250, .3);
 }
 
 body
@@ -120,4 +120,9 @@ a:hover
     color: var(--link-hover-color);
     text-decoration: underline;
     cursor: pointer;
+}
+
+.transparent-text
+{
+    color: var(--text-transparent-color);
 }
