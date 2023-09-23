@@ -6,8 +6,8 @@
     "rootURL": "/FileView.php/",
     "phpDirectory": null,
     "recursive": true,
-    "pageTitle": "File View",
-    "pageDescription": "Here's a nice little viewer of all my files and folders.<br>If you want it in JSON form, <a href=\"?json\">click here</a>.",
+    "pageTitle": "File View - Created by Jacob Humston",
+    "pageDescription": "Here's a nice little viewer of all my files and folders.<br>If you want it in JSON form, <a target=\"_blank\" href=\"?json\">click here</a>.",
     "apiEnabled": true,
     "displayREADME": true
 }

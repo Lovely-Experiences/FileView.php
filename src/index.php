@@ -111,6 +111,19 @@ if ($config->apiEnabled === true) {
             <?php echo $config->pageDescription; ?>
         </p>
     </div>
+    <div id="fileExplorer">
+        <div class="fileExplorerTopRow">
+            <p class="currentDirectory">/</p>
+        </div>
+        <div class="fileExplorerRow">
+            <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/folder.svg" alt="File Icon">
+            <p class="fileName">Folder Name</p>
+        </div>
+        <div class="fileExplorerRow fileExplorerFinalRow">
+            <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/unknown.svg" alt="File Icon">
+            <p class="fileName">File Name</p>
+        </div>
+    </div>
     <script>
         // Set some variables used by 'script.js'.
         const filesJSON = `<?php echo json_encode($files); ?>`;
