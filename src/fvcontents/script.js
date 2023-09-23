@@ -22,6 +22,5 @@ const config = JSON.parse(configJSON);
 
 // Functions
 
-
 // Listen for the window to finish loading.
 // Once it's done, we will display the first directory.
