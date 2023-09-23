@@ -2,5 +2,10 @@
     "cSpell.words": ["fvconfig", "fvcontents"],
     "php.format.rules.alignEnumCases": true,
     "php.format.codeStyle": "PSR-12",
-    "php.workspace.shortOpenTag": "auto"
+    "php.workspace.shortOpenTag": "auto",
+    "css.format.braceStyle": "expand",
+    "[markdown]": {
+        "diffEditor.wordWrap": "inherit",
+        "editor.wordWrap": "off"
+    }
 }

@@ -19,7 +19,6 @@ $configFilePath = "./fvconfig.json";
 
 // The URL of your contents folder.
 // This folder can be hosted remotely.
-// REMOTE URL: https://raw.githubusercontent.com/Lovely-Experiences/FileView.php/main/src/fvcontents/
 $contentsFilePath = "./fvcontents/"; // You do not need to include the trailing slash.
 
 // --------- END --------- //
@@ -31,52 +30,62 @@ $config = json_decode(file_get_contents($configFilePath));
 $files = new stdClass;
 $files->files = array();
 
-// Modify variables.
+// Modify variables, mostly paths.
 $contentsFilePath = rtrim($contentsFilePath, "/");
 $config->rootDirectory = rtrim($config->rootDirectory, "/");
+$config->rootURL = rtrim($config->rootURL, "/");
 
 // Change current directory to the root directory.
-chdir($config->rootDirectory);
+if ($config->phpDirectory !== null) {
+    chdir($config->phpDirectory);
+}
 
-// Verify that root is a directory.
+// Verify that root is a directory and that it exists.
 if (!file_exists($config->rootDirectory) or !is_dir($config->rootDirectory)) {
     throw new Exception("Root is not a directory.");
 }
 
 // Recursive function that loads the files.
-function loadFile(string $filePath, stdClass $object): void
+function loadFile(string $filePath, stdClass $object, $webPath): void
 {
     global $config;
-
     $newObject = new stdClass;
-
     if (is_dir($filePath)) {
+        if (in_array(basename($filePath), $config->ignoredFolders))
+            return;
         $newObject->name = basename($filePath);
         $newObject->type = "folder";
         $newObject->path = $filePath;
+        $newObject->webPath = $webPath;
         $newObject->files = array();
         foreach (scandir($filePath) as $file) {
             if ($file === "." or $file === "..")
                 continue;
-            loadFile($filePath . "/" . $file, $newObject);
+            loadFile($filePath . "/" . $file, $newObject, $webPath . "/" . $file);
         }
         array_push($object->files, $newObject);
     } else {
+        if (in_array(basename($filePath), $config->ignoredFiles) or in_array(pathinfo($filePath, PATHINFO_EXTENSION), $config->ignoredFileExtensions))
+            return;
         $newObject->name = basename($filePath);
         $newObject->type = "file";
         $newObject->path = $filePath;
+        $newObject->webPath = $webPath;
         $newObject->extension = pathinfo($filePath, PATHINFO_EXTENSION);
         array_push($object->files, $newObject);
     }
 }
 
-loadFile($config->rootDirectory, $files);
+// Load the file.
+loadFile($config->rootDirectory, $files, $config->rootURL);
 
 // Check if the URL is requesting JSON and return it if so.
-if (isset($_GET["json"])) {
-    header("Content-Type: application/json");
-    echo json_encode($files);
-    exit();
+if ($config->apiEnabled === true) {
+    if (isset($_GET["json"])) {
+        header("Content-Type: application/json");
+        echo json_encode($files);
+        exit();
+    }
 }
 
 ?>
@@ -90,11 +99,16 @@ if (isset($_GET["json"])) {
     <title>
         <?php echo $config->pageTitle; ?>
     </title>
-    <link rel="stylesheet" href="<?php echo $contentsFilePath; ?>/main.css">
+    <link rel="stylesheet" href="<?php echo $contentsFilePath; ?>/style.css">
 </head>
 
 <body>
-
+    <script>
+        // Set some variables used by 'script.js'.
+        const filesJSON = `<?php echo json_encode($files); ?>`;
+        const configJSON = `<?php echo json_encode($config); ?>`;
+    </script>
+    <script src="<?php echo $contentsFilePath; ?>/script.js"></script>
 </body>
 
 </html>

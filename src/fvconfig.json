@@ -1,9 +1,12 @@
 {
-    "ignoredFolders": ["fvcontents"],
-    "ignoredFiles": ["fvconfig.json"],
-    "ignoredFileExtensions": ["php"],
+    "ignoredFolders": [".git"],
+    "ignoredFiles": [],
+    "ignoredFileExtensions": [],
     "rootDirectory": "../",
-    "rootURL": "/",
+    "rootURL": "/FileView.php/",
+    "phpDirectory": null,
     "recursive": true,
-    "pageTitle": "File View"
+    "pageTitle": "File View",
+    "apiEnabled": true,
+    "displayREADME": true
 }
