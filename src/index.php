@@ -103,6 +103,14 @@ if ($config->apiEnabled === true) {
 </head>
 
 <body>
+    <div id="pageDetails">
+        <h1>
+            <?php echo $config->pageTitle; ?>
+        </h1>
+        <p>
+            <?php echo $config->pageDescription; ?>
+        </p>
+    </div>
     <script>
         // Set some variables used by 'script.js'.
         const filesJSON = `<?php echo json_encode($files); ?>`;

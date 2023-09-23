@@ -37,3 +37,8 @@ code
 {
     font-family: SourceCodePro, 'Courier New', Courier, monospace;
 }
+
+#pageDetails
+{
+    padding: 20px;
+}
