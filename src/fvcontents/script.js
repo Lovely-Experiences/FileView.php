@@ -26,10 +26,33 @@ const contentsPath = config._loaded.contentsFilePath;
 
 // Functions
 /**
+ * Get a file object from its path.
+ * @param {string} path
+ * @returns {FileObject|null}
+ */
+function getFileFromPath(path) {
+    /** @param {FileObject} file */
+    function checkDir(file) {
+        let found = null;
+        if (file.webPath === path) found = file;
+        file.files.forEach(function (value) {
+            if (value.webPath === path) {
+                found = value;
+            }
+            if (found === null && value.type === 'folder') {
+                found = checkDir(value);
+            }
+        });
+        return found;
+    }
+    return checkDir(files.files[0]);
+}
+
+/**
  * Display files. (Create row elements, etc.)
  * @param {FileObject} files
  */
-function displayFiles(files) {
+function displayFiles(file) {
     const fileExplorer = document.getElementById('fileExplorer');
     fileExplorer.innerHTML = '';
 
@@ -39,7 +62,41 @@ function displayFiles(files) {
 
     const currentDirectory = document.createElement('p');
     currentDirectory.classList.add('currentDirectory');
-    currentDirectory.innerHTML = `&nbsp;${files.webPath}/`.replaceAll('/', ' <span class="transparent-text">/</span> ');
+
+    /** @type {HTMLSpanElement[]} */
+    const pathElements = [];
+
+    const pathStrings = file.webPath.split('/');
+
+    pathStrings.forEach(function (value, index) {
+        let currentPath = files.files[0].webPath;
+
+        if (pathElements[index - 1] !== undefined)
+            currentPath = `${currentPath}${pathElements[index - 1].getAttribute('path')}/`;
+
+        currentPath = `${currentPath}${value}`;
+
+        const element = document.createElement('span');
+        element.innerText = value;
+
+        if (value === '') element.innerText = '*';
+
+        element.classList.add('fileName');
+        element.setAttribute('path', currentPath);
+
+        pathElements.push(element);
+
+        element.onclick = function () {
+            displayFiles(getFileFromPath(currentPath));
+        };
+    });
+
+    pathElements.forEach(function (value) {
+        currentDirectory.insertAdjacentElement('beforeend', value);
+        currentDirectory.insertAdjacentHTML('beforeend', "<span class='transparent-text'> / </span>");
+    });
+
+    currentDirectory.insertAdjacentHTML('afterbegin', '&nbsp;&nbsp;');
     topRow.insertAdjacentElement('beforeend', currentDirectory);
 
     /**
@@ -49,13 +106,18 @@ function displayFiles(files) {
         element.src = `${contentsPath}/icons/files/unknown.svg`;
     }
 
-    files.files.forEach(function (file, index) {
+    const organized = {
+        files: [],
+        folders: [],
+    };
+
+    file.files.forEach(function (file, index) {
         const row = document.createElement('div');
         row.classList.add('fileExplorerRow');
 
         const fileIcon = document.createElement('img');
         fileIcon.classList.add('fileIcon');
-        fileIcon.onerror = function() {
+        fileIcon.onerror = function () {
             errorImage(fileIcon);
         };
 
@@ -63,22 +125,36 @@ function displayFiles(files) {
         paragraph.classList.add('fileName');
         paragraph.innerText = file.name;
 
+        row.insertAdjacentElement('beforeend', fileIcon);
+        row.insertAdjacentElement('beforeend', paragraph);
+
         if (file.type === 'folder') {
             fileIcon.src = `${contentsPath}/icons/files/folder.svg`;
+            organized.folders.push(row);
+            paragraph.onclick = function () {
+                displayFiles(file);
+            };
         } else if (file.type === 'file') {
             if (file.extension === '') {
                 file.extension = file.name;
             }
             fileIcon.src = `${contentsPath}/icons/files/${file.extension}.svg`;
+            organized.files.push(row);
+            paragraph.onclick = function () {
+                window.location = file.webPath;
+            };
         }
+    });
 
-        if (files[index + 1] === undefined) {
-            row.classList.add('fileExplorerFinalRow');
+    organized.files.sort((a, b) => a.innerText - b.innerText);
+    organized.folders.sort((a, b) => a.innerText - b.innerText);
+
+    const rows = organized.folders.concat(organized.files);
+    rows.forEach(function (value, index) {
+        fileExplorer.insertAdjacentElement('beforeend', value);
+        if (rows[index + 1] === undefined) {
+            value.classList.add('fileExplorerFinalRow');
         }
-
-        row.insertAdjacentElement('beforeend', fileIcon);
-        row.insertAdjacentElement('beforeend', paragraph);
-        fileExplorer.insertAdjacentElement('beforeend', row);
     });
 
     fileExplorer.hidden = false;

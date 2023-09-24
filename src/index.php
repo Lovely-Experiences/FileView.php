@@ -6,8 +6,8 @@
 // Docs: https://github.com/Lovely-Experiences/FileView.php/docs/v1.md
 
 declare(strict_types=1);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 clearstatcache();
 
@@ -119,11 +119,11 @@ if ($config->apiEnabled === true) {
             <p class="currentDirectory">&nbsp;&nbsp;/Loading...</p>
         </div>
         <div class="fileExplorerRow">
-            <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/folder.svg" alt="File Icon">
+            <img class="fileIcon" src="" alt="File Icon">
             <p class="fileName">Loading...</p>
         </div>
         <div class="fileExplorerRow fileExplorerFinalRow">
-            <img class="fileIcon" src="/FileView.php/src/fvcontents/icons/files/unknown.svg" alt="File Icon">
+            <img class="fileIcon" src="" alt="File Icon">
             <p class="fileName">Loading...</p>
         </div>
     </div>
