@@ -20,4 +20,5 @@ If you are interested in making a theme for FileView.php, then please [click her
 # Screenshots
 
 JSON API, allowing easy modification and external use.
+
 ![JSON API](/screenshots/json-api.png)
