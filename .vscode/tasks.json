@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "label": "Test",
-            "command": "php -S localhost:4000",
+            "command": "php -S localhost:5555",
             "detail": "Test php using a simple shell script."
         }
     ]

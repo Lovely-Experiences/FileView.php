@@ -50,11 +50,15 @@ function getFileFromPath(path) {
 
 /**
  * Display files. (Create row elements, etc.)
- * @param {FileObject} files
+ * @param {FileObject} file
  */
 function displayFiles(file) {
     const fileExplorer = document.getElementById('fileExplorer');
     fileExplorer.innerHTML = '';
+
+    const extraPanel = document.getElementById('extraPanel');
+    extraPanel.innerHTML = '';
+    extraPanel.hidden = true;
 
     const topRow = document.createElement('div');
     topRow.classList.add('fileExplorerTopRow');
@@ -131,6 +135,7 @@ function displayFiles(file) {
         if (file.type === 'folder') {
             fileIcon.src = `${contentsPath}/icons/files/folder.svg`;
             organized.folders.push(row);
+
             paragraph.onclick = function () {
                 displayFiles(file);
             };
@@ -138,11 +143,46 @@ function displayFiles(file) {
             if (file.extension === '') {
                 file.extension = file.name;
             }
+
             fileIcon.src = `${contentsPath}/icons/files/${file.extension}.svg`;
             organized.files.push(row);
+
             paragraph.onclick = function () {
                 window.location = file.webPath;
             };
+
+            if (config.displayREADME === true) {
+                if (
+                    file.name === 'README' ||
+                    file.name === 'README.txt' ||
+                    file.name === 'README.md' ||
+                    file.name === 'README.markdown' ||
+                    file.name === 'README.html'
+                ) {
+                    const artical = document.createElement('article');
+                    artical.classList.add('markdown-body');
+                    extraPanel.insertAdjacentElement('afterbegin', artical);
+
+                    fetch(file.webPath)
+                        .then(async function (response) {
+                            const fileContents = await response.text();
+
+                            if (file.extension === 'md' || file.extension === 'markdown') {
+                                const response = await fetch('https://api.github.com/markdown', {
+                                    method: 'POST',
+                                    body: JSON.stringify({ text: fileContents }),
+                                });
+
+                                artical.innerHTML = await response.text();
+                                extraPanel.hidden = false;
+                            } else {
+                                extraPanel.innerHTML = fileContents;
+                                extraPanel.hidden = false;
+                            }
+                        })
+                        .catch();
+                }
+            }
         }
     });
 

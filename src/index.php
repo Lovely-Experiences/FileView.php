@@ -103,6 +103,7 @@ if ($config->apiEnabled === true) {
         <?php echo $config->pageTitle; ?>
     </title>
     <link rel="stylesheet" href="<?php echo $contentsFilePath; ?>/style.css">
+    <link rel="stylesheet" href="<?php echo $contentsFilePath; ?>/github-markdown.css">
 </head>
 
 <body>
@@ -127,6 +128,7 @@ if ($config->apiEnabled === true) {
             <p class="fileName">Loading...</p>
         </div>
     </div>
+    <div id="extraPanel" hidden=true></div>
     <script>
         // Set some variables used by 'script.js'.
         const filesJSON = `<?php echo json_encode($files); ?>`;
