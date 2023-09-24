@@ -176,13 +176,15 @@ function displayFiles(file) {
                                         body: JSON.stringify({ text: fileContents }),
                                     });
 
-                                    artical.innerHTML = await response.text();
+                                    const responseText = await response.text();
+
+                                    artical.innerHTML = responseText;
                                     extraPanel.hidden = false;
 
                                     if (response.status === 403) {
                                         extraPanel.innerHTML = `Exceeded GitHub markdown API ratelimit.<br><br>Markdown Source:<br><code>${fileContents}</code>`;
                                     } else {
-                                        requestCache[`github-markdown-:${file.webPath}`] = await response.text();
+                                        requestCache[`github-markdown-:${file.webPath}`] = responseText;
                                     }
                                 } else {
                                     artical.innerHTML = requestCache[`github-markdown-:${file.webPath}`];
