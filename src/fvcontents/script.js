@@ -24,6 +24,8 @@ const config = JSON.parse(configJSON);
 
 const contentsPath = config._loaded.contentsFilePath;
 
+const requestCache = {};
+
 // Functions
 /**
  * Get a file object from its path.
@@ -168,13 +170,24 @@ function displayFiles(file) {
                             const fileContents = await response.text();
 
                             if (file.extension === 'md' || file.extension === 'markdown') {
-                                const response = await fetch('https://api.github.com/markdown', {
-                                    method: 'POST',
-                                    body: JSON.stringify({ text: fileContents }),
-                                });
+                                if (requestCache[`github-markdown-:${file.webPath}`] === undefined) {
+                                    const response = await fetch('https://api.github.com/markdown', {
+                                        method: 'POST',
+                                        body: JSON.stringify({ text: fileContents }),
+                                    });
 
-                                artical.innerHTML = await response.text();
-                                extraPanel.hidden = false;
+                                    artical.innerHTML = await response.text();
+                                    extraPanel.hidden = false;
+
+                                    if (response.status === 403) {
+                                        extraPanel.innerHTML = `Exceeded GitHub markdown API ratelimit.<br><br>Markdown Source:<br><code>${fileContents}</code>`;
+                                    } else {
+                                        requestCache[`github-markdown-:${file.webPath}`] = await response.text();
+                                    }
+                                } else {
+                                    artical.innerHTML = requestCache[`github-markdown-:${file.webPath}`];
+                                    extraPanel.hidden = false;
+                                }
                             } else {
                                 extraPanel.innerHTML = fileContents;
                                 extraPanel.hidden = false;

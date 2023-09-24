@@ -40,6 +40,10 @@ textarea
 code
 {
     font-family: SourceCodePro, 'Courier New', Courier, monospace;
+    background-color: var(--secondary-background-color);
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 a
