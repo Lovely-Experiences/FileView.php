@@ -1,0 +1,1 @@
+-   [ ] Switch icons to https://github.com/PKief/vscode-material-icon-theme/tree/main/icons.
