@@ -184,11 +184,13 @@ function displayFiles(file) {
 
                                     const responseText = await response.text();
 
-                                    article.innerHTML = responseText;
+                                    article.innerText = responseText;
                                     extraPanel.hidden = false;
 
                                     if (response.status === 403) {
                                         extraPanel.innerHTML = `Exceeded GitHub markdown API ratelimit.<br><br>Markdown Source:<br><code>${fileContents}</code>`;
+                                    } else if (response.status === 404) {
+                                        extraPanel.innerText = '404 - File not found!';
                                     } else {
                                         requestCache[`github-markdown-:${file.webPath}`] = responseText;
                                     }
