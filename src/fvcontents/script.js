@@ -184,7 +184,7 @@ function displayFiles(file) {
 
                                     const responseText = await response.text();
 
-                                    article.innerText = responseText;
+                                    article.innerHTML = responseText;
                                     extraPanel.hidden = false;
 
                                     if (response.status === 403) {
