@@ -1,8 +1,8 @@
 {
-    "ignoredFolders": [".git"],
+    "ignoredFolders": [],
     "ignoredFiles": [],
     "ignoredFileExtensions": [],
-    "rootDirectory": "./",
+    "rootDirectory": "../",
     "rootURL": "/",
     "phpDirectory": null,
     "recursive": true,
