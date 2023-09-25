@@ -139,7 +139,7 @@ function displayFiles(file) {
             organized.folders.push(row);
 
             if (file.files.length === 0)  {
-                paragraph.insertAdjacentElement('beforeend', "span class='transparent-text'><i>(Empty)</i></span>")
+                paragraph.insertAdjacentHTML('beforeend', "span class='transparent-text'><i>(Empty)</i></span>")
             } else {
                 paragraph.onclick = function () {
                     displayFiles(file);
