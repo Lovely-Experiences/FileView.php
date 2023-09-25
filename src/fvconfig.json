@@ -1,6 +1,6 @@
 {
-    "ignoredFolders": [".git"],
-    "ignoredFiles": [],
+    "ignoredFolders": [".git", "fvcontents"],
+    "ignoredFiles": ["fvconfig.json"],
     "ignoredFileExtensions": [],
     "rootDirectory": "./",
     "rootURL": "/",
