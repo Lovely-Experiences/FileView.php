@@ -138,8 +138,9 @@ function displayFiles(file) {
             fileIcon.src = `${contentsPath}/icons/files/folder.svg`;
             organized.folders.push(row);
 
-            if (file.files.length === 0)  {
-                paragraph.insertAdjacentHTML('beforeend', "span class='transparent-text'><i>(Empty)</i></span>")
+            if (file.files.length === 0) {
+                paragraph.insertAdjacentHTML('beforeend', " <span class='transparent-text'><i>(Empty)</i></span>");
+                paragraph.classList.add('fileNameNoClick');
             } else {
                 paragraph.onclick = function () {
                     displayFiles(file);
@@ -154,7 +155,8 @@ function displayFiles(file) {
             organized.files.push(row);
 
             paragraph.onclick = function () {
-                window.location = file.webPath;
+                //window.location = file.webPath;
+                window.open(file.webPath, '_blank');
             };
 
             if (config.displayREADME === true) {
@@ -165,16 +167,16 @@ function displayFiles(file) {
                     file.name === 'README.markdown' ||
                     file.name === 'README.html'
                 ) {
-                    const artical = document.createElement('article');
-                    artical.classList.add('markdown-body');
-                    extraPanel.insertAdjacentElement('afterbegin', artical);
+                    const article = document.createElement('article');
+                    article.classList.add('markdown-body');
+                    extraPanel.insertAdjacentElement('afterbegin', article);
 
-                    fetch(file.webPath)
-                        .then(async function (response) {
-                            const fileContents = await response.text();
+                    if (requestCache[`github-markdown-:${file.webPath}`] === undefined) {
+                        fetch(file.webPath)
+                            .then(async function (response) {
+                                const fileContents = await response.text();
 
-                            if (file.extension === 'md' || file.extension === 'markdown') {
-                                if (requestCache[`github-markdown-:${file.webPath}`] === undefined) {
+                                if (file.extension === 'md' || file.extension === 'markdown') {
                                     const response = await fetch('https://api.github.com/markdown', {
                                         method: 'POST',
                                         body: JSON.stringify({ text: fileContents }),
@@ -182,7 +184,7 @@ function displayFiles(file) {
 
                                     const responseText = await response.text();
 
-                                    artical.innerHTML = responseText;
+                                    article.innerHTML = responseText;
                                     extraPanel.hidden = false;
 
                                     if (response.status === 403) {
@@ -191,15 +193,15 @@ function displayFiles(file) {
                                         requestCache[`github-markdown-:${file.webPath}`] = responseText;
                                     }
                                 } else {
-                                    artical.innerHTML = requestCache[`github-markdown-:${file.webPath}`];
+                                    extraPanel.innerHTML = fileContents;
                                     extraPanel.hidden = false;
                                 }
-                            } else {
-                                extraPanel.innerHTML = fileContents;
-                                extraPanel.hidden = false;
-                            }
-                        })
-                        .catch();
+                            })
+                            .catch();
+                    } else {
+                        article.innerHTML = requestCache[`github-markdown-:${file.webPath}`];
+                        extraPanel.hidden = false;
+                    }
                 }
             }
         }
