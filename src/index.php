@@ -117,7 +117,7 @@ if ($config->apiEnabled === true) {
     </div>
     <div id="fileExplorer" hidden=true>
         <div class="fileExplorerTopRow">
-            <p class="currentDirectory">&nbsp;&nbsp;/Loading...</p>
+            <p class="currentDirectory">Loading...</p>
         </div>
         <div class="fileExplorerRow">
             <img class="fileIcon" src="" alt="File Icon">

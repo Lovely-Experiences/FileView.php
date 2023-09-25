@@ -102,7 +102,7 @@ function displayFiles(file) {
         currentDirectory.insertAdjacentHTML('beforeend', "<span class='transparent-text'> / </span>");
     });
 
-    currentDirectory.insertAdjacentHTML('afterbegin', '&nbsp;&nbsp;');
+    // currentDirectory.insertAdjacentHTML('afterbegin', '&nbsp;&nbsp;');
     topRow.insertAdjacentElement('beforeend', currentDirectory);
 
     /**
@@ -138,9 +138,13 @@ function displayFiles(file) {
             fileIcon.src = `${contentsPath}/icons/files/folder.svg`;
             organized.folders.push(row);
 
-            paragraph.onclick = function () {
-                displayFiles(file);
-            };
+            if (file.files.length === 0)  {
+                paragraph.insertAdjacentElement('beforeend', "span class='transparent-text'><i>(Empty)</i></span>")
+            } else {
+                paragraph.onclick = function () {
+                    displayFiles(file);
+                };
+            }
         } else if (file.type === 'file') {
             if (file.extension === '') {
                 file.extension = file.name;

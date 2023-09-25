@@ -63,7 +63,7 @@ a:hover
 #pageDetails
 {
     padding: 20px;
-    max-width: 1000px;
+    /* max-width: 1000px; */
 }
 
 #fileExplorer
@@ -89,7 +89,7 @@ a:hover
     border-color: var(--row-border-color);
     border-bottom-style: none;
     border-width: 2px;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     font-size: 20px;
 }
 
@@ -99,6 +99,7 @@ a:hover
     border-top-left-radius: 12px;
     font-size: 24px;
     font-weight: bold;
+    padding-left: 20px;
 }
 
 .fileExplorerFinalRow
