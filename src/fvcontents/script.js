@@ -108,8 +108,8 @@ function displayFiles(file) {
     /**
      * @param {HTMLImageElement} element
      */
-    function errorImage(element) {
-        element.src = `${contentsPath}/icons/files/unknown.svg`;
+    function errorImage(element, file) {
+        // element.src = `${contentsPath}/icons/files/unknown.svg`;
     }
 
     const organized = {
@@ -124,7 +124,7 @@ function displayFiles(file) {
         const fileIcon = document.createElement('img');
         fileIcon.classList.add('fileIcon');
         fileIcon.onerror = function () {
-            errorImage(fileIcon);
+            errorImage(fileIcon, file);
         };
 
         const paragraph = document.createElement('p');
@@ -135,7 +135,7 @@ function displayFiles(file) {
         row.insertAdjacentElement('beforeend', paragraph);
 
         if (file.type === 'folder') {
-            fileIcon.src = `${contentsPath}/icons/files/folder.svg`;
+            fileIcon.src = `${contentsPath}/icons/files/folder-${file.name.replace('.', '')}.svg`;
             organized.folders.push(row);
 
             if (file.files.length === 0) {

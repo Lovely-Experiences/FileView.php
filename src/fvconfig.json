@@ -1,9 +1,9 @@
 {
-    "ignoredFolders": [".git", "fvcontents"],
-    "ignoredFiles": ["fvconfig.json"],
+    "ignoredFolders": [],
+    "ignoredFiles": [],
     "ignoredFileExtensions": [],
     "rootDirectory": "../",
-    "rootURL": "/FileView.php/",
+    "rootURL": "/",
     "phpDirectory": null,
     "recursive": true,
     "pageTitle": "File View - Created by Jacob Humston",
