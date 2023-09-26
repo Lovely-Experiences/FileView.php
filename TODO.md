@@ -1,1 +1,2 @@
--   [ ] Switch icons to https://github.com/PKief/vscode-material-icon-theme/tree/main/icons.
+-   [x] Switch icons to https://github.com/PKief/vscode-material-icon-theme/tree/main/icons.
+-   [ ] Use https://github.com/PKief/vscode-material-icon-theme/blob/main/src/icons/fileIcons.ts to better display the icons.
